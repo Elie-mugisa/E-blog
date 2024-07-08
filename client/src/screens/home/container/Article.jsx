@@ -23,7 +23,6 @@ const Article = () => {
     },
   });
 
-
   return (
     <section
       className={` py-5 flex flex-col justify-center text-center gap-8  px-5 lg:py-10 lg:px-10`}

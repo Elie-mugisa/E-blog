@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import MainLayout from "./../../components/MainLayout";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -62,12 +62,14 @@ const ProfilePage = () => {
     defaultValues: {
       name: "",
       email: "",
-      password: "",
+      password: "", 
     },
-    values: {
-      name: profileIsLoading ? "" : profileData.name,
-      email: profileIsLoading ? "" : profileData.email,
-    },
+    values: useMemo(() => {
+      return {
+        name: profileIsLoading ? "" : profileData.name,
+        email: profileIsLoading ? "" : profileData.email,
+      };
+    }, [profileData?.name, profileData?.email, profileIsLoading]),
     mode: "onChange",
   });
 

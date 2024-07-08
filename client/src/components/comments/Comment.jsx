@@ -4,6 +4,7 @@ import { FiMessageSquare, FiEdit2, FiTrash } from "react-icons/fi";
 
 import photo from "../../assets/44.jpeg";
 import CommentForm from "./CommentForm";
+import stables from "../../constants/stables";
 
 const Comment = ({
   comment,
@@ -36,7 +37,11 @@ const Comment = ({
     <div className="flex flex-nowrap items-start gap-3 bg-[#F2F4F5] p-3 rounded-lg ">
       {/* left side */}
       <img
-        src={photo}
+        src={
+          comment?.user?.avatar
+            ? stables.UPLOAD_FOLDER_BASE_URL + comment.user.avatar
+            : photo
+        }
         alt="User profile"
         className="w-9 h-9 object-cover rounded-full"
       />

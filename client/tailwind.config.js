@@ -20,15 +20,15 @@ export default {
         // lightText: "rgb(var(--lightText) / <alpha-value)",
         prim: "rgb(14, 165, 233)",
         dark: {
-          light: "#5A7184", 
+          light: "#5A7184",
           hard: "#0D2436",
           soft: "#183856",
         },
       },
-      fontFamily:{
-        opensans: ["'Open Sans'", 'sans-serif'],
+      fontFamily: {
+        opensans: ["'Open Sans'", "sans-serif"],
         roboto: ["Roboto Mono", "monospace"],
-        nunito: ["Nunito", "sans-serif"]
+        nunito: ["Nunito", "sans-serif"],
       },
       screens: {
         sm: "480px",
@@ -38,7 +38,12 @@ export default {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography')
-  ],
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+
+  daisyui: {
+    themes: [], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+    base: false, // applies background color and foreground color for root element by default
+    styled: true, // include daisyUI colors and design decisions for all components
+    utils: true,
+  },
 };

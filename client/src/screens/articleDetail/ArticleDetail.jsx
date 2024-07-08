@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-empty-pattern */
 /* eslint-disable no-unused-vars */
@@ -10,7 +11,7 @@ import CommentsContainer from "../../components/comments/CommentsContainer";
 import SocialShareBtn from "../../components/SocialShareBtn";
 import stables from "./../../constants/stables";
 import samplePic from "/images/sampleImage.png";
-import { getSinglePost } from "../../services/index/post";
+import { getAllPosts, getSinglePost } from "../../services/index/post";
 import { useEffect, useState } from "react";
 
 import { generateHTML } from "@tiptap/html";
@@ -24,51 +25,12 @@ import Italic from "@tiptap/extension-italic";
 import { useQuery } from "@tanstack/react-query";
 import ArticleCardSkeleton from "../../components/ArticleCardSkeleton";
 import ErrorMessage from "../../components/ErrorMessage";
-import toast from "react-hot-toast";
 import parse from "html-react-parser";
+import { useSelector } from "react-redux";
 
-// const breadCrumbsData = [
-//   { name: "home", link: "/" },
-//   { name: "blog", link: "/blog" },
-//   { name: "Article title", link: "/blog/1" },
-// ];
-
-const postData = [
-  {
-    id: "1",
-    image: imageDetail,
-    title: "Help Children get better life",
-    createdAt: "2024-01-28T15:35:52.607+0000",
-  },
-  {
-    id: "2",
-    image: imageDetail,
-    title: "Help Children get better life",
-    createdAt: "2024-01-28T15:35:52.607+0000",
-  },
-  {
-    id: "3",
-    image: imageDetail,
-    title: "Help Children get better life",
-    createdAt: "2024-01-28T15:35:52.607+0000",
-  },
-  {
-    id: "4",
-    image: imageDetail,
-    title: "Help Children get better life",
-    createdAt: "2024-01-28T15:35:52.607+0000",
-  },
-  {
-    id: "5",
-    image: imageDetail,
-    title: "Help Children get better life",
-    createdAt: "2024-01-28T15:35:52.607+0000",
-  },
-];
-
-const tagsData = ["Medical", "Lifestyle", "Learn", "Food", "Diet", "Educatio"];
 
 const ArticleDetail = () => {
+  const userState = useSelector((state) => state.user);
   const { slug } = useParams();
   const [breadCrumbsData, setBreadCrumbsData] = useState([]);
   const [body, setBody] = useState(null);
@@ -76,6 +38,10 @@ const ArticleDetail = () => {
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryFn: () => getSinglePost({ slug }),
     queryKey: ["blog", slug],
+  });
+  const { data: postData } = useQuery({
+    queryFn: () => getAllPosts(),
+    queryKey: ["posts"],
   });
 
   useEffect(() => {
@@ -138,7 +104,12 @@ const ArticleDetail = () => {
             <div className="mt-4 prose prose-sm sm:prose-base ">{body}</div>
 
             {/* comments */}
-            <CommentsContainer className="mt-10" logginedUserId="a" />
+            <CommentsContainer
+              comments={data?.comments}
+              className="mt-10"
+              logginedUserId={userState?.userInfo?._id}
+              postSlug={slug}
+            />
           </article>
 
           {/* Social media box */}
@@ -146,7 +117,7 @@ const ArticleDetail = () => {
             <SuggestedPost
               header="Latest Article"
               posts={postData}
-              tags={tagsData}
+              tags={data?.tags}
               className="mt-8 lg:p-0 lg:max-w-xs "
             />
 
@@ -156,9 +127,9 @@ const ArticleDetail = () => {
               </h2>
               <SocialShareBtn
                 url={encodeURI(
-                  "https://moonfo.com/post/client-side-and-server-side-explanation"
+                  window.location.href
                 )}
-                title={encodeURIComponent("Client-side and server-side")}
+                title={encodeURIComponent(data?.title)}
               />
             </div>
           </div>

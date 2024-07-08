@@ -3,6 +3,7 @@ import { fileRemover } from "../utils/fileRemover.js";
 import Post from "../models/PostModel.js";
 import Comment from "../models/CommentModel.js";
 import { uuid } from "uuidv4";
+import { populate } from "dotenv";
 
 const createPost = async (req, res, next) => {
   try {
@@ -125,6 +126,12 @@ const getPost = async (req, res, next) => {
             match: {
               check: true,
             },
+            populate: [
+              {
+                path: "user",
+                select: ["avatar", "name"],
+              },
+            ],
           },
         ],
       },

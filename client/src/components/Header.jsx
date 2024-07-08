@@ -80,6 +80,8 @@ const Header = () => {
     dispatch(logout());
   };
 
+  // console.log(userState?.userInfo?.admin);
+
   return (
     <section className="sticky top-0 left-0 right-0 z-40">
       <header className=" bg-white flex justify-between items-center px-10 py-4 ">
@@ -136,13 +138,23 @@ const Header = () => {
                   }  z-50 bg-dark-hard transition-all duration-500  absolute bottom-3 right-8 transform translate-y-full  flex items-start   w-max rounded-lg lg:bg-white  `}
                 >
                   <ul className="flex flex-col w-max shadow-lg  rounded-lg ">
+                    {userState?.userInfo?.admin && (
+                      <button
+                        onClick={() => navigate("/admin")}
+                        type="button"
+                        className="hover:bg-dark-hard rounded-t-lg hover:text-white px-4 py-2 text-white lg:text-dark-soft text-xs"
+                      >
+                        Admin dashboard
+                      </button>
+                    )}
                     <button
                       onClick={() => navigate("/profile")}
                       type="button"
-                      className="hover:bg-dark-hard rounded-t-lg hover:text-white px-4 py-2 text-white lg:text-dark-soft text-xs"
+                      className="hover:bg-dark-hard  hover:text-white px-4 py-2 text-white lg:text-dark-soft text-xs"
                     >
                       Profile Page
                     </button>
+
                     <button
                       onClick={logoutHandler}
                       type="button"
@@ -182,6 +194,7 @@ const Header = () => {
           <div className="flex flex-col gap-4 text-white  items-center gap-x-8 lg:text-dark-soft">
             <div className=" flex items-center gap-1">
               {/* <a href="/">{item.name}</a> */}
+
               <button
                 className="px-4 py-2 flex gap-x-1 items-center"
                 onClick={() => setProfileDropDown(!profileDropDown)}
@@ -196,6 +209,16 @@ const Header = () => {
                 }  z-50 bg-dark-hard overflow-hidden transition-all duration-500 pt-4 absolute bottom-0 right-0 transform translate-y-full group-hover:block w-max rounded-lg lg:bg-white `}
               >
                 <ul className="flex flex-col w-max shadow-lg rounded-lg ">
+                  {userState?.userInfo?.admin && (
+                    <button
+                      onClick={() => navigate("/admin")}
+                      type="button"
+                      className="hover:bg-dark-hard hover:text-white px-4 py-2 text-white lg:text-dark-soft text-xs"
+                    >
+                      Admin Dashboard
+                    </button>
+                  )}
+
                   <button
                     onClick={() => navigate("/profile")}
                     type="button"
